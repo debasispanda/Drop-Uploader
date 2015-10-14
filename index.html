@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Drag and drop files</title>
+	<link rel="stylesheet" type="text/css" href="library/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/styles.css">
+	<style type="text/css">
+		.file-droppable{
+			padding: 20px;
+			border: 2px dashed #ddd;
+		}
+		.drop-over{
+			border: 2px dashed green;
+		}
+	</style>
+</head>
+<body>
+	
+	<div class="col-sm-6">
+		<select id="data">
+			<option>10</option>
+			<option>12</option>
+			<option>13</option>
+			<option>14</option>
+		</select>
+		<div class="uploader text-center" id="drag-and-drop-zone" for="upload-file-button">
+			<p><i class="fa fa-folder-open-o fa-3x"></i></p>
+			<div>
+				<h3>DRAG FILE(S) HERE FOR UPLOAD</h3>
+				<p>or browse for file(s)</p>
+			<!-- <p class="file-upload-btn-container">
+				<label>
+					<input type="file" value="BROWSE FILES" class="btn btn-primary" multiple="multiple" name="upload-file-button" id="upload-file-button">
+					<button type="button" class="btn btn-primary">BROWSE FILES</button>
+				</label>
+			</p> -->
+		</div>
+	</div>
+</div>
+<!-- <div id="drop_zone" class="file-droppable">Drop files here</div> -->
+<script type="text/javascript" src="library/jquery.js"></script>
+<script type="text/javascript" src="js/drop-uploader.js"></script>
+<script type="text/javascript">
+	$('#drag-and-drop-zone').dropUpload({
+		url: "http://tv.local/CampaignPortfolioManager/Service/library/FileUpload",
+		type: 'POST',
+		dataType: 'json',
+		data : function(){
+			var data = {};
+			data.CommaSeperatedTags = "";
+            data.FolderId = 2740;   //$("#selFolder").val(),
+            data.SelectImageFromLib = false,
+            data.CurrentSelectedImageId = -1,
+            data.ImageSizeId = 1,  //$("#selImageSize").val(),
+            data.ImageSize = '6x19' //$("#selImageSize option:selected").text()
+
+			return data;
+		},
+		showFileList : false,
+		showUploadProgress : true,
+		progressBarContainer : '.col-xs-4',
+	});
+</script>
+</body>
+</html>
