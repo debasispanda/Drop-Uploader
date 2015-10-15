@@ -11,7 +11,7 @@
     var d = {
         url: document.URL,
         method: "POST",
-        extraData: {},
+        extraData: null,
         maxFileSize: 0,
         allowedTypes: "*",
         dataType: null,
@@ -115,7 +115,7 @@
         return true
     };
     a.prototype.processQueue = function() {
-        var h = this;
+        var h = this, d;
         h.queuePos++;
         if (h.queuePos >= h.queue.length) {
             h.settings.onComplete.call(h.element);
@@ -126,7 +126,15 @@
         var g = h.queue[h.queuePos];
         var f = new FormData();
         f.append(h.settings.fileName, g);
-        c.each(h.settings.extraData, function(i, j) {
+        
+        if(typeof(h.settings.extraData) === "function"){
+            d = h.settings.extraData();
+        }
+        else{
+            d = h.settings.extraData;
+        }
+
+        c.each(d, function(i, j) {
             f.append(i, j)
         });
         h.settings.onBeforeUpload.call(h.element, h.queuePos);
